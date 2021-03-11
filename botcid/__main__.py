@@ -6,7 +6,6 @@ from modulos import createpj, deletepj
 
 #declaracion de variables simples
 INI = configparser.ConfigParser()
-TEMPID = 0
 userid=0
 #declaracion de funciones-----------------------------
 def test(update,context):
@@ -23,7 +22,7 @@ def yamete(update,context):
 #-------------------------------------------------------#
 def registrar(update, context):
     
-    createpj.start(update, context,INI)
+    createpj.start(update, context,dp)
 
 #------------------------------------------------#
 def borrarpj(update, context):
@@ -35,8 +34,10 @@ if __name__ == '__main__':
 
     dirtoken = 'C:/Users/Eli/Documents/GitHub/DonJuezCidBot/botcid/token.txt'
     FinalToken = open(dirtoken,'r')
+    
 
     updater = Updater(token=str(FinalToken.read()), use_context=True)
+    FinalToken.close()
 
     dp = updater.dispatcher
 
