@@ -3,7 +3,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 #main------------------------------------------
 def start(update, context,INI,dp):
     AUTH = update.message.from_user['id']
-    print('StartAUTH: '+str(AUTH))
+    #print('StartAUTH: '+str(AUTH))
 
     button1 = InlineKeyboardButton(
         text='Si',
