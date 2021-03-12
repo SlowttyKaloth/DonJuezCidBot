@@ -2,7 +2,8 @@ from telegram.ext import MessageHandler, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 #main------------------------------------------
 def start(update, context,INI,dp):
-    tempid = update.message.from_user['id']
+    AUTH = update.message.from_user['id']
+    print('StartAUTH: '+str(AUTH))
 
     button1 = InlineKeyboardButton(
         text='Si',
@@ -23,11 +24,12 @@ def start(update, context,INI,dp):
     ##funciones------------------------
     def borrarpj(update,context):
 
+        print('BorrarAUTH: '+str(AUTH))
         userid = update.callback_query.from_user['id']
         useridsect = '%s' %userid
         INI.read('C:/Users/Eli/Documents/GitHub/DonJuezCidBot/botcid/users/users.ini')
 
-        if INI.has_section(useridsect) and (userid == tempid):
+        if INI.has_section(useridsect) and (userid == AUTH):
             INI.remove_section(useridsect)
             with open('C:/Users/Eli/Documents/GitHub/DonJuezCidBot/botcid/users/users.ini','w') as userini:
                 INI.write(userini)
@@ -36,27 +38,30 @@ def start(update, context,INI,dp):
                 query.answer
                 query.edit_message_text(
                     text='Usted ha sido eliminado del sistema')
-        elif userid == tempid:
+                return 0
+        elif userid == AUTH:
             with open('C:/Users/Eli/Documents/GitHub/DonJuezCidBot/botcid/users/users.ini') as  userini:
                 userini.close()
                 query = update.callback_query
                 query.answer
                 query.edit_message_text(
                     text='Usted no esta registrado en el sistema ')
+                return 0
         else:
-            pass
+            return 0
 
 
     def noborrarpj(update,context):
 
         userid = update.callback_query.from_user['id']
 
-        if userid == tempid:
+        if userid == AUTH:
         
             query = update.callback_query
             query.answer
             query.edit_message_text(
                 text='Cancelado')
+            return 0
 
 #    def test(update,context):
 #        query = update.callback_query
@@ -69,6 +74,7 @@ def start(update, context,INI,dp):
 ##handlers------------------------------------------
     dp.add_handler(CallbackQueryHandler(pattern='si',callback=borrarpj))
     dp.add_handler(CallbackQueryHandler(pattern='no',callback=noborrarpj))
+    return 0
 
 
 
