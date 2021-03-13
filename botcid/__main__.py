@@ -8,13 +8,18 @@ from scripts import classes
 #declaracion de variables simples
 INI = configparser.ConfigParser()
 DICT = classes.DICT('usuarios')
+CBCKQH = CallbackQueryHandler
+INLKB = InlineKeyboardButton
+INLKM = InlineKeyboardMarkup
+var = classes.var
 
 #declaracion de funciones-----------------------------
 def test(update,context):
     ID = update.message.from_user['id']
 
     if DICT.keyexist(ID)==False:
-        DICT.additem(ID,0)
+        instance = deletepj.deletepj
+        DICT.additem(ID,instance)
         update.message.reply_text('instancias activas: '+str(len(DICT.getlist()))+'\n'+str(DICT.getlist()))
         DICT.delkey(ID)
     else:
@@ -37,9 +42,9 @@ def registrar(update, context):
     ID = update.message.from_user['id']
 
     if DICT.keyexist(ID)==False:
-        DICT.setitem(ID,createpj.start(update, context,INI))
+        DICT.setitem(ID,createpj.start)
+        DICT.getitem(ID)(update, context,INI,ID,DICT)
         print(str(DICT.getlist()))
-        DICT.delkey(ID)
         return  
     else:
         update.message.reply_text('Usted ya tiene una instancia activa')
@@ -50,10 +55,11 @@ def borrarpj(update, context):
     ID = update.message.from_user['id']
 
     if DICT.keyexist(ID)==False:
-        DICT.setitem(ID,deletepj.start(update, context,INI,dp))
-        print(str(DICT.getlist()))
-        DICT.delkey(ID)
-        print(str(DICT.getlist()))
+        instance = deletepj.deletepj
+        GET = DICT.setitem(ID,instance)
+        print(instance)
+        instance = 0
+        DICT.getitem(GET).start(deletepj.deletepj,update,context,INI,dp,ID,DICT,GET,INLKB,INLKM,CBCKQH)
         return  
     else:
         update.message.reply_text('Usted ya tiene una instancia activa')
